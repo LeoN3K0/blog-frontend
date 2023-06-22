@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 
 const NoMatch = () => {
   return (
-    <div className="w-full  h-screen">
-      <div className="max-w-[1000px] px-8 flex flex-col justify-center h-60">
-      <h2>Page Does Not Exist!</h2>
-      <p>
-        <Link to="/">Go to the home page</Link>
-      </p>
+    <div className="flex items-center justify-center min-h-screen bg-gray-200">
+      <div className="text-center">
+        <h2 className="text-4xl font-bold mb-4">OOPS...</h2>
+        <p className="text-lg">Looks like the page doesn't exist</p>
+        <p className="mt-4">
+          <Link to="/" className="inline-block bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2">
+            Go to the home page
+          </Link>
+        </p>
       </div>
     </div>
   );

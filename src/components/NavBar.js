@@ -17,7 +17,6 @@ const NavBar = () => {
         <ul className="hidden md:flex">
           <li className="border-white hover:border-b"><Link to="/">Home</Link></li>
           <li className='border-white hover:border-b'><Link to="/blog">Blog</Link></li>
-          <li className='border-white hover:border-b'><Link to="/about">About</Link></li>
           <li className='border-white hover:border-b'><Link to="/login">Login</Link></li>
         </ul>
         
@@ -30,7 +29,6 @@ const NavBar = () => {
         <ul className={!nav ? 'hidden' : 'absolute top-0 left-0 w-full h-screen bg-[#1e1926] flex flex-col justify-center items-center'}>
           <li className="py-6 text-4xl border-white hover:border-b"><Link onClick={handleClick} to="/">Home</Link></li>
           <li className="py-6 text-4xl border-white hover:border-b"><Link onClick={handleClick} to="/blog">Blog</Link></li>
-          <li className="py-6 text-4xl border-white hover:border-b"><Link onClick={handleClick} to="/about">About</Link></li>
           <li className="py-6 text-4xl border-white hover:border-b"><Link onClick={handleClick} to="/login">Login</Link></li>
         </ul>
       </nav>
