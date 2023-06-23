@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import '../styles/App.css';
 import NavBar from './NavBar';
 import Home from './Home';
+import Login from './Login';
 import NoMatch from './NoMatch';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<NavBar />}>
           <Route index element={<Home />} />
+          <Route path="/login" element={<Login />}/>
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
