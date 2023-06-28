@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BlogService from "../services/blog.service";
 import AuthService from "../services/auth.service";
+import CreateBlogBtn from "./CreateBlogBtn";
 
 const Home = () => {
   const [recentPosts, setRecentPosts] = useState([]);
@@ -38,9 +39,7 @@ const Home = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold">Welcome to My Blog</h1>
           {currentUser && (
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-              Create Post
-            </button>
+            <CreateBlogBtn />
           )}
         </div>
         <div className="grid grid-cols-3 gap-6">

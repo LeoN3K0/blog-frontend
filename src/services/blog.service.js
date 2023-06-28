@@ -28,6 +28,10 @@ const findByTitle = title => {
   return http.get(`/blogs?title=${title}`);
 };
 
+const findByAuthor = (author) => {
+  return http.get(`/blogs?author=${author}`);
+};
+
 const BlogService = {
   getAll,
   get,
@@ -35,7 +39,8 @@ const BlogService = {
   update,
   remove,
   removeAll,
-  findByTitle
+  findByTitle,
+  findByAuthor
 };
 
 export default BlogService;
