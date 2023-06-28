@@ -8,6 +8,7 @@ import Login from './Login';
 import Blogs from './Blogs';
 import NoMatch from './NoMatch';
 import Profile from "./Profile";
+import CreateBlog from "./CreateBlog";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/blogs" element={<Blogs/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/createblog" element={<CreateBlog/>} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </div>
