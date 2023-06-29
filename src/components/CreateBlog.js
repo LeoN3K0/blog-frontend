@@ -1,39 +1,45 @@
-import React, { useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import BlogService from "../services/blog.service";
+import React, { useState, } from "react";
+import BlogDataService from "../services/blog.service";
+import AuthService from "../services/auth.service";
 
 const CreateBlog = () => {
   const initialBlogState = {
+    id: null,
     title: "",
-    body: ""
+    body: "",
+    published: false,
+    author: "",
+    publisheddate: "",
   };
   const [blog, setBlog] = useState(initialBlogState);
   const [submitted, setSubmitted] = useState(false);
+  const currentUser = AuthService.getCurrentUser();
+  const currentDate = new Date().toLocaleDateString();
+
 
   const handleInputChange = event => {
     const { name, value } = event.target;
     setBlog({ ...blog, [name]: value });
   };
 
-  const handleEditorChange = value => {
-    setBlog({ ...blog, body: value });
-  };
-
-  const handleImageUpload = file => {
-    // Implement your image upload logic here
-    // You can use libraries like Cloudinary, Firebase Storage, etc.
-  };
-
   const saveBlog = () => {
-    const data = {
+    var data = {
       title: blog.title,
-      body: blog.body
+      body: blog.body,
+      author: currentUser.username,
+      publisheddate: currentDate
     };
 
-    BlogService.create(data)
+    BlogDataService.create(data)
       .then(response => {
-        setBlog(initialBlogState);
+        setBlog({
+          id: response.data.id,
+          title: response.data.title,
+          body: response.data.description,
+          published: response.data.published,
+          author: currentUser.username,
+          publisheddate: currentDate
+        });
         setSubmitted(true);
         console.log(response.data);
       })
@@ -42,78 +48,55 @@ const CreateBlog = () => {
       });
   };
 
-  const resetForm = () => {
+  const newBlog = () => {
     setBlog(initialBlogState);
     setSubmitted(false);
   };
 
   return (
     <div className="bg-gray-200 pt-[80px] min-h-screen">
-      <div className="container mx-auto px-8 py-12">
-        <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
+      <div className="ontainer mx-auto px-8 py-12">
+        <div className="max-w-md mx-auto bg-white rounded p-6 shadow-md">
           {submitted ? (
-            <div>
-              <h4 className="text-lg font-semibold mb-4">
-                You submitted successfully!
-              </h4>
+            <div className="text-center">
+              <h4 className="text-2xl font-bold mb-4">You submitted successfully!</h4>
               <button
-                className="px-4 py-2 bg-green-500 text-white rounded-md"
-                onClick={resetForm}
+                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                onClick={newBlog}
               >
-                Add Another Blog
+                Add
               </button>
             </div>
           ) : (
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Create Blog</h2>
               <div className="mb-4">
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Title
-                </label>
+                <label htmlFor="title" className="text-lg font-bold">Title</label>
                 <input
                   type="text"
+                  className="block w-full border border-gray-300 rounded px-4 py-2"
                   id="title"
                   required
                   value={blog.title}
                   onChange={handleInputChange}
                   name="title"
-                  className="border border-gray-300 rounded-md px-4 py-2 w-full"
                 />
               </div>
+
               <div className="mb-4">
-                <label
-                  htmlFor="body"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Body
-                </label>
-                <ReactQuill
+                <label htmlFor="body" className="text-lg font-bold">Body</label>
+                <textarea
+                  className="block w-full border border-gray-300 rounded px-4 py-2"
+                  id="body"
+                  required
                   value={blog.body}
-                  onChange={handleEditorChange}
-                  className="bg-white"
-                  modules={{
-                    toolbar: {
-                      container: [
-                        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                        ["bold", "italic", "underline", "strike"],
-                        [{ script: "sub" }, { script: "super" }],
-                        [{ list: "ordered" }, { list: "bullet" }],
-                        ["link", "image", "video"],
-                        ["clean"]
-                      ],
-                      handlers: {
-                        image: handleImageUpload // Handle image upload
-                      }
-                    }
-                  }}
+                  onChange={handleInputChange}
+                  name="body"
                 />
               </div>
+
               <button
                 onClick={saveBlog}
-                className="px-4 py-2 bg-green-500 text-white rounded-md"
+                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
               >
                 Submit
               </button>
