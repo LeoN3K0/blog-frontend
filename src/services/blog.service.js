@@ -1,4 +1,6 @@
 import http from "../http-common";
+import AuthService from "../services/auth.service";
+
 
 const getAll = () => {
   return http.get("/blogs");
@@ -9,7 +11,12 @@ const get = id => {
 };
 
 const create = data => {
-  return http.post("/blogs", data);
+  const currentUser = AuthService.getCurrentUser();
+  const headers = {
+    Authorization: `Bearer ${currentUser.accessToken}`
+  };
+
+  return http.post(`/blogs`, data, { headers });
 };
 
 const update = (id, data) => {
